@@ -4,15 +4,30 @@
     <div class="card">
         <div class="card-header"><b>익명 글수정 화면입니다</b></div>
         <div class="card-body">
-            <form action="#">
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Enter author" name="author">
+            <form action="/board/{{board.id}}/update" method="post">
+                <div>
+                    <h6>작성자 (수정 불가)</h6>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Enter title" name="title">
+                    <input type="text" class="form-control" placeholder="Enter author" name="author" value={{board.author}} readonly>
+                </div>
+                <div>
+                    <h6>제목 (수정 불가)</h6>
                 </div>
                 <div class="mb-3">
-                    <textarea class="form-control" rows="5" name="content"></textarea>
+                    <input type="text" class="form-control" placeholder="Enter title" name="title" value={{board.title}} readonly>
+                </div>
+                <div>
+                    <h6>기존 내용</h6>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" rows="5" placeholder="{{board.content}}" disabled></textarea>
+                </div>
+                <div>
+                    <h6>내용 수정</h6>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" rows="5" placeholder="{{board.content}}" name="content"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary form-control">글수정완료</button>
             </form>
