@@ -13,6 +13,7 @@ import java.util.List;
 public class BoardRepository {
     private final EntityManager em;
     public List<Board> findAll(){
+        // todo 페이징
         Query query = em.createNativeQuery("select * from board_tb order by id desc",Board.class);
         List<Board> boardList = query.getResultList();
         return boardList;
@@ -33,11 +34,13 @@ public class BoardRepository {
     }
     @Transactional
     public int updateById(BoardRequest.UpdateDTO requestDTO, int id){
-        Query query = em.createNativeQuery("update board_tb set title = ?, content = ?, author = ? where id = ?");
-        query.setParameter(1, requestDTO.getTitle());
-        query.setParameter(2, requestDTO.getContent());
-        query.setParameter(3, requestDTO.getAuthor());
-        query.setParameter(4, id);
+        Query query = em.createNativeQuery("update board_tb set content = ?, title = ? where id = ?");
+        query.setParameter(1, requestDTO.getContent());
+        query.setParameter(2, requestDTO.getTitle());
+        /* 작성자 수정 희망시,
+        query.setParameter(?, requestDTO.getAuthor());
+        */
+        query.setParameter(3, id);
         return query.executeUpdate();
     }
     @Transactional

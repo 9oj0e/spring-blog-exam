@@ -11,8 +11,10 @@ public class BoardRequest {
     }
     @Data
     public class UpdateDTO{
-        private String title;
         private String content;
+        private String title;
+        /* 작성자 수정 희망시,
         private String author;
+        */
     }
 }
