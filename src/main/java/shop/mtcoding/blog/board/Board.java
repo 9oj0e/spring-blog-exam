@@ -17,7 +17,7 @@ public class Board {
     private String title;
     @Column(length = 20)
     private String content;
-    @Column(nullable = false)
+    @Column(length = 10, nullable = false)
     private String author;
     @CreationTimestamp
     private LocalDateTime createdAt;

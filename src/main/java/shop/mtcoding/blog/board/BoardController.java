@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import shop.mtcoding.blog._core.PagingUtil;
 
 import java.util.List;
 
@@ -20,19 +21,19 @@ public class BoardController {
     @GetMapping("/")
     public String index(@RequestParam(defaultValue = "0") int page, HttpServletRequest request) {
         // 모델 조회
-        List<Board> boardList = boardRepository.findAll();
+        List<Board> boardList = boardRepository.findAll(page);
         // 상자 담기
         session.setAttribute("boardList", boardList);
 
-        // todo 페이징
+        // 페이징
         int currentPage = page;
         int nextPage = currentPage + 1;
         int prevPage = currentPage - 1;
         request.setAttribute("nextPage", nextPage);
         request.setAttribute("prevPage", prevPage);
 
-        boolean first = false;
-        boolean last = false;
+        boolean first = PagingUtil.isFisrt(currentPage);
+        boolean last = PagingUtil.isLast(currentPage, boardRepository.count());
 
         session.setAttribute("first", first);
         session.setAttribute("last", last);
@@ -46,16 +47,17 @@ public class BoardController {
     public String saveForm() {
         return "board/saveForm";
     }
+
     @PostMapping("/board/save")
-    public String save(BoardRequest.SaveDTO requestDTO, HttpServletRequest request){
+    public String save(BoardRequest.SaveDTO requestDTO, HttpServletRequest request) {
         System.out.println("게시글 삽입 시도..");
         // 유효성 검사
-        if ( requestDTO.getTitle().length() > 20 || requestDTO.getContent().length() > 20) {
+        if (requestDTO.getTitle().length() > 20 || requestDTO.getContent().length() > 20) {
             request.setAttribute("status", 400);
             request.setAttribute("msg", "제목과 내용은 20자를 초과할 수 없습니다.");
             return "error/40x";
         }
-        if ( requestDTO.getAuthor() == null ){
+        if (requestDTO.getAuthor() == null) {
             request.setAttribute("status", 400);
             request.setAttribute("msg", "작성자의 이름이 누락되었습니다.");
         }
@@ -75,10 +77,10 @@ public class BoardController {
     }
 
     @PostMapping("/board/{id}/update")
-    public String update(@PathVariable int id, BoardRequest.UpdateDTO requestDTO, HttpServletRequest request){
+    public String update(@PathVariable int id, BoardRequest.UpdateDTO requestDTO, HttpServletRequest request) {
         System.out.println("게시글 수정 시도..");
         // 유효성 검사
-        if ( requestDTO.getTitle().length() > 20 || requestDTO.getContent().length() > 20) {
+        if (requestDTO.getTitle().length() > 20 || requestDTO.getContent().length() > 20) {
             request.setAttribute("status", 400);
             request.setAttribute("msg", "제목과 내용은 20자를 초과할 수 없습니다.");
             return "error/40x";
@@ -96,7 +98,7 @@ public class BoardController {
     }
 
     @PostMapping("/board/{id}/delete")
-    public String delete(@PathVariable int id){
+    public String delete(@PathVariable int id) {
         System.out.println("게시글 삭제 시도..");
         // 모델 위임
         int result = boardRepository.deleteById(id);
