@@ -8,7 +8,9 @@ public class PagingUtil {// 페이징
 
     public static boolean isLast(int currentPage, int totalCount) {
         int totalPageCount = getTotalPageCount(totalCount);
-        return currentPage == totalPageCount - 1 ? true : false;
+        if (totalCount != 0)
+            return currentPage == totalPageCount - 1 ? true : false;
+        return true;
     }
 
     public static int getTotalPageCount(int totalCount) {

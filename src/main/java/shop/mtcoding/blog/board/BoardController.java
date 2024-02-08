@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import shop.mtcoding.blog._core.Constant;
 import shop.mtcoding.blog._core.PagingUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,9 +34,15 @@ public class BoardController {
         request.setAttribute("nextPage", nextPage);
         request.setAttribute("prevPage", prevPage);
 
-        boolean first = PagingUtil.isFisrt(currentPage);
-        boolean last = PagingUtil.isLast(currentPage, boardRepository.count());
-
+        boolean first, last;
+        int totalCount = boardRepository.count();
+        if (boardRepository.count() != 0) {
+            first = PagingUtil.isFisrt(currentPage);
+            last = PagingUtil.isLast(currentPage, totalCount);
+        } else {
+            first = true;
+            last = true;
+        }
         session.setAttribute("first", first);
         session.setAttribute("last", last);
 

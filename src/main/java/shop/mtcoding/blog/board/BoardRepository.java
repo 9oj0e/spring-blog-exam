@@ -34,6 +34,7 @@ public class BoardRepository {
 
         return ((Number) query.getSingleResult()).intValue();
     }
+
     public Board findById(int id) {
         Query query = em.createNativeQuery("select * from board_tb where id = ?", Board.class);
         query.setParameter(1, id);
