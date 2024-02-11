@@ -1,5 +1,8 @@
 package shop.mtcoding.blog._core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PagingUtil {// 페이징
 
     public static boolean isFisrt(int currentPage) {
@@ -12,6 +15,12 @@ public class PagingUtil {// 페이징
             return currentPage == totalPageCount - 1 ? true : false;
         return true;
     }
+    public static int nextPage(int currentPage){
+        return currentPage + 1;
+    }
+    public static int prevPage(int currentPage){
+        return currentPage - 1;
+    }
 
     public static int getTotalPageCount(int totalCount) {
         int remainCount = totalCount % Constant.PAGING_COUNT;
@@ -20,5 +29,14 @@ public class PagingUtil {// 페이징
             totalPageCount += 1;
         }
         return totalPageCount;
+    }
+    public static List<Integer> getPageList(int lastPage){
+        List<Integer> pageCount = new ArrayList<>();
+        if (lastPage > 0 ) {
+            for (int pageNum = 0; pageNum < lastPage; pageNum++) {
+                pageCount.add(pageNum);
+            }
+        }
+        return pageCount;
     }
 }

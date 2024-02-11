@@ -27,26 +27,31 @@ public class BoardController {
         // 상자 담기
         session.setAttribute("boardList", boardList);
 
-        // 페이징
-        int currentPage = page;
-        int nextPage = currentPage + 1;
-        int prevPage = currentPage - 1;
-        request.setAttribute("nextPage", nextPage);
-        request.setAttribute("prevPage", prevPage);
+        // 페이징 todo 축약?
+        request.setAttribute("nextPage", PagingUtil.nextPage(page));
+        request.setAttribute("prevPage", PagingUtil.prevPage(page));
 
-        boolean first, last;
         int totalCount = boardRepository.count();
-        if (boardRepository.count() != 0) {
-            first = PagingUtil.isFisrt(currentPage);
-            last = PagingUtil.isLast(currentPage, totalCount);
+        session.setAttribute("first", PagingUtil.isFisrt(page));
+        session.setAttribute("last", PagingUtil.isLast(page, totalCount));
+
+        /* 게시글이 하나도 없을 때, next, prev 비활성화
+        if (totalCount != 0) {
+            first = PagingUtil.isFisrt(page);
+            last = PagingUtil.isLast(page, totalCount);
         } else {
             first = true;
             last = true;
         }
-        session.setAttribute("first", first);
-        session.setAttribute("last", last);
+        */
 
-        // todo 페이징 넘버링
+        // 페이징 넘버링
+        int totalPageCount = PagingUtil.getTotalPageCount(totalCount);
+        List<Integer> pageCount = PagingUtil.getPageList(totalPageCount);
+        session.setAttribute("pageCount", pageCount);
+
+        // todo 현재 페이지와 버튼 페이지가 같으면 버튼 비활성화
+        //  if 현재 페이지 == 버튼 페이지 ? disabled : NULL
 
         return "index";
     }

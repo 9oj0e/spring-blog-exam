@@ -30,3 +30,17 @@ insert into board_tb(title, content, author, created_at)
 values ('제목15', 'c3-81a', '?', now());
 insert into board_tb(title, content, author, created_at)
 values ('제목16', 'c3-82a', '?', now());
+insert into board_tb(title, content, author, created_at)
+values ('제목17', 'c3-83a', '?', now());
+insert into board_tb(title, content, author, created_at)
+values ('제목18', 'c3-84a', '?', now());
+insert into board_tb(title, content, author, created_at)
+values ('제목19', 'c3-85a', '?', now());
+insert into board_tb(title, content, author, created_at)
+values ('제목20', 'c3-86a', '?', now());
+insert into board_tb(title, content, author, created_at)
+values ('제목', '와라라', '임꺽정', now());
+insert into board_tb(title, content, author, created_at)
+values ('제목', '내용', '장보고', now());
+insert into board_tb(title, content, author, created_at)
+values ('제목', '내용', '홍길동', now());
